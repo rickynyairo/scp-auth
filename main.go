@@ -33,7 +33,7 @@ func main() {
 	srv := micro.NewService(
 
 		// This name must match the package name given in your protobuf definition
-		micro.Name("shippy.auth"),
+		micro.Name("auth"),
 		micro.Version("latest"),
 		// micro.Registry(etcd.NewRegistry()),
 	)
