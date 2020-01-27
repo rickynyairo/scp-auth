@@ -1,0 +1,42 @@
+trigger: 
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Test
+  displayName: Test code
+  jobs:
+  - job: Test
+    displayName: Testing job
+    steps: 
+      - task: GoTool@0
+        inputs:
+          version: '1.13.5'
+      - task: Go@0
+        inputs:
+          command: 'get'
+          arguments: '-d'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+      - task: Go@0
+        inputs:
+          command: 'test'
+          arguments: '-v'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+- stage: Build
+  displayName: Build and push stage
+  jobs:  
+  - job: Build
+    displayName: Build job
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
