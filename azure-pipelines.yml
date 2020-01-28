@@ -17,7 +17,7 @@ variables:
   imageRepository: 'shippyauth'
   containerRegistry: 'shippyacr.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: '$(Build.BuildId)'
+  tag: 'latest' #'$(Build.BuildId)'
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
